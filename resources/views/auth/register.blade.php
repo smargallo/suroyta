@@ -29,7 +29,7 @@
                 </div>
                 </div>
                 <div class="text-start position-absolute fixed-bottom ms-7">
-                <h6 class="text-white text-sm mb-5">Copyright © 2022 LaagTa.</h6>
+                <h6 class="text-white text-sm mb-5">Copyright © 2022 SUROYTA.</h6>
                 </div>
             </div>
             </div>

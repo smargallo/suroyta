@@ -164,7 +164,7 @@
               <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
             <li class="nav-item dropdown pe-2 d-flex align-items-center">
               <div class="avatar avatar-sm position-relative">
-                <img src="../assets/img/team-2.jpg" alt="profile_image" class="w-100 border-radius-md">
+                <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="profile_image" class="w-100 border-radius-md">
               </div>
             </li>
             </a>
@@ -210,7 +210,7 @@
         <div class="row">
           <div class="col-auto">
             <div class="avatar avatar-2xl rounded-circle position-relative mt-n7 border border-gray-100 border-4">
-              <img src="../assets/img/team-2.jpg" alt="profile_image" class="w-100">
+              <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="profile_image" class="w-100">
             </div>
           </div>
           <div class="col-auto my-auto">
