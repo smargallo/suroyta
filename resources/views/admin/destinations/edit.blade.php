@@ -32,18 +32,18 @@
                             </div>
                         </div>
 
-                        <div class="form-group {{ $errors->has('description') ? 'has-danger' : 'has-success' }}">
+                        <div class="form-group">
 
                             <label class="mt-4">Destination Description</label>
                             <p class="form-text text-muted text-xs ms-1">
                                 This is how others will learn about the destination, so make it good!
                             </p>
-                            <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : 'is-valid' }}" name="description" id="" cols="30" rows="10">{{ $destination->description }}</textarea>
+                            <textarea class="form-control" name="description" id="" cols="30" rows="10">{{ $destination->description }}</textarea>
                         </div>
 
-                        <div class="form-group  {{ $errors->has('location') ? 'has-danger' : 'has-success' }}">
+                        <div class="form-group">
                             <label class="mt-4 form-label">Location</label>    
-                            <input class="form-control {{ $errors->has('location') ? 'is-invalid' : 'is-valid' }}" type="text" name="location" value="{{ $destination->location }}">
+                            <input class="form-control" type="text" name="location" value="{{ $destination->location }}">
                         </div>
 
 

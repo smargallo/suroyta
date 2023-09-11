@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Establishment;
 use App\Models\Destination;
+use App\Models\Service;
 
 class EstablishmentController extends Controller
 {
@@ -33,19 +34,29 @@ class EstablishmentController extends Controller
 
     public function store(Request $request)
     {
+
+        
         // Validate input
         $validatedData =  $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'location' => 'required|string|max:255',
-        ]);
-
-        // Create a new establishment using the validated data
-        $establishment = Establishment::create($validatedData);
-
+            'destination_id' => 'required',
+        ]); 
         
-        // Attach the selected destination to the new establishment
-        $establishment->destinations()->attach($request->input('destination_id'));
+        // Create a new establishment using the validated data
+        $establishment = Establishment::create( $validatedData );
+
+        // Upload and associate multiple images with the establishment
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imagePath = $image->store('images/establishments', 'public');
+                $establishment->images()->create(['image_path' => $imagePath]);
+            }
+        }
+        
+        $establishment->destination()->associate($request->input('destination_id'));
+        
 
         // Redirect to the appropriate page (e.g., show the created establishment)
         return redirect()->route('admin.establishments.show', $establishment->id);
@@ -57,8 +68,10 @@ class EstablishmentController extends Controller
         // Retrieve the specific establishment based on the provided $id
         $establishment = Establishment::findOrFail($id);
 
+        $services = $establishment->services;
+
         // Return a view to display the details of the establishment
-        return view('admin.establishments.show', compact('establishment'));
+        return view('admin.establishments.show', compact('establishment', 'services'));
     }
 
 
@@ -102,4 +115,39 @@ class EstablishmentController extends Controller
         return redirect()->route('admin.establishments.index');
     }
 
+
+    public function storeService(Request $request, Establishment $establishment)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $service = new Service([
+            'name' => $request->input('name'),
+        ]);
+
+        $establishment->services()->save($service);
+
+        return redirect()->route('admin.establishments.show', $establishment);
+    }
+
+    public function updateService(Request $request, Establishment $establishment, Service $service)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $service->update([
+            'name' => $request->input('name'),
+        ]);
+
+        return redirect()->route('admin.establishments.show', $establishment);
+    }
+
+    public function deleteService(Establishment $establishment, Service $service)
+    {
+        $service->delete();
+
+        return redirect()->route('admin.establishments.show', $establishment);
+    }
 }

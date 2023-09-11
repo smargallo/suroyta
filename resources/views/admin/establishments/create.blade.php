@@ -6,10 +6,17 @@
         <div class="mx-auto col-lg-9 col-12">
             <div class="mt-4 card blur">
                 <div class="card-body">
-                    <form method="post" action="{{ route('admin.establishments.store') }}">
+                    <form method="post" action="{{ route('admin.establishments.store') }}" enctype="multipart/form-data">
                         @csrf
                         <h6 class="mb-0">New Establishment</h6>
                         <p class="mb-4 text-sm">Create new establishment</p>
+
+
+                        <div class="form-group {{ $errors->has('name') ? 'has-danger' : 'has-success' }}">
+                            <label for="name" class="form-label">Establishment Name</label>
+                            <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : 'is-valid' }}" id="name" name="name"  onfocus="focused(this)"
+                            onfocusout="defocused(this)" value="{{ old('name', $establishment->name) }}">
+                        </div>
 
                         <div class="form-group {{ $errors->has('destination_id') ? 'has-danger' : 'has-success' }}">
                             <label for="destination_id">Select Destination</label>
@@ -21,11 +28,7 @@
                             </select>
                         </div>
 
-                        <div class="form-group {{ $errors->has('name') ? 'has-danger' : 'has-success' }}">
-                            <label for="name" class="form-label">Establishment Name</label>
-                            <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : 'is-valid' }}" id="name" name="name"  onfocus="focused(this)"
-                            onfocusout="defocused(this)" value="{{ old('name', $establishment->name) }}">
-                        </div>
+
 
                         <div class="mt-4 row">
                             <div class="col-12 col-md-6">
@@ -46,18 +49,27 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group {{ $errors->has('description') ? 'has-danger' : 'has-success' }}">
+
+                        <div class="form-group">
+                            <label class="mt-4">Upload Images</label>
+                            <p class="form-text text-muted text-xs ms-1">
+                                Upload images for them to visually figure out what is the actual place.
+                            </p>
+                            <input type="file" name="images[]" multiple accept="image/*" class="form-control">
+                        </div>
+
+                        <div class="form-group">
 
                             <label class="mt-4">Establishment Description</label>
                             <p class="form-text text-muted text-xs ms-1">
                                 This is how others will learn about the establishment, so make it good!
                             </p>
-                            <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : 'is-valid' }}" name="description" id="" cols="30" rows="10">{{ old('description', $establishment->description) }}</textarea>
+                            <textarea class="form-control" name="description" id="" cols="30" rows="10">{{ old('description', $establishment->description) }}</textarea>
                         </div>
 
-                        <div class="form-group  {{ $errors->has('location') ? 'has-danger' : 'has-success' }}">
+                        <div class="form-group">
                             <label class="mt-4 form-label">Location</label>    
-                            <input class="form-control {{ $errors->has('location') ? 'is-invalid' : 'is-valid' }}" type="text" name="location" value="{{ old('location', $establishment->location) }}">
+                            <input class="form-control" type="text" name="location" value="{{ old('location', $establishment->location) }}">
                         </div>
 
                         <div class="mt-4 d-flex justify-content-end">

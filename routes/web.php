@@ -33,6 +33,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('destinations', App\Http\Controllers\DestinationController::class);
     Route::resource('establishments', App\Http\Controllers\EstablishmentController::class);
 
+    Route::post('/establishment/{establishment}/services', [App\Http\Controllers\EstablishmentController::class, 'storeService'])->name('store.services');
+    Route::put('/establishment/{establishment}/services/{service}', [App\Http\Controllers\EstablishmentController::class, 'updateService'])->name('update.services');
+
+    // Delete service
+    Route::delete('/establishment/{establishment}/services/{service}', [App\Http\Controllers\EstablishmentController::class, 'deleteService'])->name('delete.services');
+
     Route::get('/users', [App\Http\Controllers\AdminController::class, 'users'])->name('users');
     Route::get('/profile', [App\Http\Controllers\AdminController::class, 'profile'])->name('profile');
     Route::put('/profile/update', [App\Http\Controllers\AdminController::class, 'updateProfile'])->name('profile.update');

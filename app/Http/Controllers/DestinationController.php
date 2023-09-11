@@ -37,16 +37,21 @@ class DestinationController extends Controller
     { 
         // Validate input
         $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'location' => 'required|string|max:255',
+            'name' => 'required|string|max:255'
         ]);
 
         // Check if the status checkbox is checked in the request
         $status = $request->has('status') ? 1 : 0;
 
         // Create a new destination
-        Destination::create(array_merge($request->all(), ['status' => $status]));
+        Destination::create(array_merge(
+            $request->all(), 
+            [
+                'status' => $status, 
+                'description' => $request->input('description'), 
+                'location' => $request->input('location')
+            ]
+        ));
 
         // Redirect to the destinations index page
         return redirect()->route('admin.destinations.index')
@@ -81,9 +86,7 @@ class DestinationController extends Controller
     {
         // Validate input
         $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'location' => 'required|string|max:255',
+            'name' => 'required|string|max:255', 
         ]);
 
         // Check if the status checkbox is checked in the request
@@ -93,7 +96,14 @@ class DestinationController extends Controller
         $destination = Destination::findOrFail($id);
 
         // Update the destination with the new data, including the status
-        $destination->update(array_merge($request->all(), ['status' => $status]));
+        $destination->update(array_merge(
+            $request->all(), 
+            [
+                'status' => $status, 
+                'description' => $request->input('description'), 
+                'location' => $request->input('location')
+            ]
+        ));
 
         // Redirect to the destinations index page
         return redirect()->route('admin.destinations.index')

@@ -9,10 +9,20 @@ use App\Models\Destination;
 class Establishment extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'description', 'location'];
+    protected $fillable = ['name', 'description', 'location', 'destination_id'];
     
     public function destination()
     {
         return $this->belongsTo(Destination::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(EstablishmentImage::class);
+    }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class);
     }
 }
