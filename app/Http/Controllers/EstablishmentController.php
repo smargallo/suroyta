@@ -66,12 +66,13 @@ class EstablishmentController extends Controller
     public function show(string $id)
     {
         // Retrieve the specific establishment based on the provided $id
-        $establishment = Establishment::findOrFail($id);
+        $establishment  = Establishment::findOrFail($id);
 
-        $services = $establishment->services;
+        $services       = $establishment->services;
+        $images         = $establishment->images;
 
         // Return a view to display the details of the establishment
-        return view('admin.establishments.show', compact('establishment', 'services'));
+        return view('admin.establishments.show', compact('establishment', 'services', 'images'));
     }
 
 

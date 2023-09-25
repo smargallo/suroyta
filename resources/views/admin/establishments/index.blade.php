@@ -79,11 +79,11 @@
                       <td class="align-middle">
                         <div class="d-flex gap-2">
 
-                            <a href="{{ route('admin.establishments.edit', $establishment->id) }}" class="text-secondary font-weight-bold text-xs" data-bs-toggle="tooltip" data-bs-title="Edit user">
+                            <a href="{{ route('admin.establishments.edit', $establishment->id) }}" class="text-secondary font-weight-bold text-xs" data-bs-toggle="tooltip" data-bs-title="Edit establishment">
                                 <i class="fa fa-edit"></i>
                             </a>
                             
-                            <a href="{{ route('admin.establishments.destroy', $establishment->id) }}" class="text-danger font-weight-bold text-xs" data-bs-toggle="tooltip" data-bs-title="Delete destination" onclick="event.preventDefault(); document.getElementById('delete-destination-form-{{ $establishment->id }}').submit();">
+                            <a href="{{ route('admin.establishments.destroy', $establishment->id) }}" class="text-danger font-weight-bold text-xs" data-bs-toggle="tooltip" data-bs-title="Delete establishment" onclick="event.preventDefault(); document.getElementById('delete-destination-form-{{ $establishment->id }}').submit();">
                                 <i class="fa fa-trash"></i>
                             </a>
                             <form id="delete-destination-form-{{ $establishment->id }}" action="{{ route('admin.establishments.destroy', $establishment->id) }}" method="POST" style="display: none;">

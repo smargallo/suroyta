@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+
+
 @section('content')
 
 <div class="container-fluid">
@@ -22,129 +24,144 @@
     </div>
     <hr class="my-0">
     <div class="row my-4">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="card shadow-xs border">
                 <div class="card-body">
                     <h6 class="font-weight-semibold text-lg mb-0">Description</h6>
-                    <div>
+                    <div class="py-4">
                         {!! $establishment->description !!}
                     </div>
-                    {{-- @if($establishment->images->count() > 0)
-                        <div id="imageCarousel" class="carousel slide" data-ride="carousel">
-                            <!-- Indicators -->
-                            <ol class="carousel-indicators">
-                                @foreach($establishment->images as $key => $image)
-                                    <li data-target="#imageCarousel" data-slide-to="{{ $key }}"
-                    class="{{ $key === 0 ? 'active' : '' }}"></li>
-                    @endforeach
-                    </ol>
 
-                    <!-- Slides -->
-                    <div class="carousel-inner">
-                        @foreach($establishment->images as $key => $image)
-                        <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                            <img src="{{ asset('storage/' . $image->image_path) }}" alt="Establishment Image">
-                        </div>
-                        @endforeach
-                    </div>
-
-                    <!-- Controls -->
-                    <a class="carousel-control-prev text-dark" href="#imageCarousel" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next text-dark" href="#imageCarousel" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
                 </div>
-                @endif --}}
             </div>
         </div>
-    </div>
-</div>
-<div class="row my-4">
+        <div class="col-md-6"> 
+            <div class="row">
+                <div class="card shadow-xs border">
+                    <div class="card-body">
+                        <div class="position-relative overflow-hidden">
+                            <div class="swiper mySwiper mt-4 mb-2" loop="true">
+                                <div class="swiper-wrapper">
+                                    @foreach ($images as $key => $image)
+                                        
+                                    <div class="swiper-slide">
+                                        <div>
+                                            <div
+                                                class="card card-background shadow-none border-radius-xl card-background-after-none align-items-start mb-0">
+                                                <div class="full-background bg-contain"
+                                                    style="background-image: url('{{ asset('storage/' . $image->image_path) }}')"></div>
+                                                <div class="card-body text-start px-3 py-0 w-100">
+                                                    <div class="row mt-12">
+                                                        <div class="col-sm-3 mt-auto">
+                                                            <h4 class="text-dark font-weight-bolder">#{{ $key + 1 }}</h4>
+                                                            
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                            </div>
 
-    <div class="col-lg-6 col-md-12">
-        <div class="card shadow-xs border">
-            <div class="card-header border-bottom pb-0">
-                <div class="d-sm-flex align-items-center mb-3">
-                    <div>
-                        <h6 class="font-weight-semibold text-lg mb-0">Services</h6>
-                        <p class="text-sm mb-sm-0 mb-2">These are the list of all services.</p>
-                    </div>
-                    <div class="ms-auto d-flex">
-                        <button type="button" class="btn btn-sm btn-white mb-0 me-2">
-                            View report
-                        </button>
-                        <button type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-center mb-0"
-                            data-bs-toggle="modal" data-bs-target="#createServiceModal">
-                            <span class="btn-inner--icon mx-2 d-flex align-items-center">
-                                <i class="fa fa-plus"></i>
-                            </span>
-                            <span class="btn-inner--text">New Service</span>
-                        </button>
-                    </div>
-                </div>
- 
-            </div>
-            <div class="card-body px-0 py-0">
-                <div class="table-responsive p-0">
-                    <table class="table align-items-center justify-content-center mb-0">
-                        <thead class="bg-gray-100">
-                            <tr>
-                                <th class="text-secondary text-xs font-weight-semibold opacity-7">Service Namme</th>
-                                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Date</th>
-                                <th class="text-center text-secondary text-xs font-weight-semibold opacity-7"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($services as $service)
-                            <tr>
-                                <td>
-                                    <div class="d-flex px-2">
-                                        <div class="text-secondary text-xs font-weight-semibold opacity-7">
-                                            {{ $service->name }}
                                         </div>
                                     </div>
-                                </td>
-                                <td class="align-middle text-secondary text-xs font-weight-semibold opacity-7">
-                                    {{ $service->created_at }}</td>
-                                <td class="align-middle">
-                                    <div class="d-flex alignt-items-center justify-content-center">
 
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#editServiceModal"  class="text-secondary font-weight-bold text-xs mx-2"
-                                            data-bs-toggle="tooltip" data-bs-title="Edit Service" data-service-name="{{ $service->name }}">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
+                                    @endforeach
 
-                                        <a href="#" class="text-danger font-weight-bold text-xs mx-2"
-                                            data-bs-toggle="tooltip" data-bs-title="Delete Service"
-                                            onclick="event.preventDefault(); document.getElementById('delete-service-form-{{ $service->id }}').submit();">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    </div>
+                                        
+                                </div>
+                            </div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div> 
+        </div>
+    </div>
+    
+    <div class="row my-4">
 
-                                    <form id="delete-service-form-{{ $service->id }}"
-                                        action="{{ route('admin.delete.services', [$establishment->id, $service->id]) }}"
-                                        method="POST" style="display: none;">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+        <div class="col-lg-6 col-md-12">
+            <div class="card shadow-xs border">
+                <div class="card-header border-bottom pb-0">
+                    <div class="d-sm-flex align-items-center mb-3">
+                        <div>
+                            <h6 class="font-weight-semibold text-lg mb-0">Services</h6>
+                            <p class="text-sm mb-sm-0 mb-2">These are the list of all services.</p>
+                        </div>
+                        <div class="ms-auto d-flex">
+                            <button type="button" class="btn btn-sm btn-white mb-0 me-2">
+                                View report
+                            </button>
+                            <button type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-center mb-0"
+                                data-bs-toggle="modal" data-bs-target="#createServiceModal">
+                                <span class="btn-inner--icon mx-2 d-flex align-items-center">
+                                    <i class="fa fa-plus"></i>
+                                </span>
+                                <span class="btn-inner--text">New Service</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body px-0 py-0">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center justify-content-center mb-0">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="text-secondary text-xs font-weight-semibold opacity-7">Service Namme</th>
+                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Date</th>
+                                    <th class="text-center text-secondary text-xs font-weight-semibold opacity-7"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($services as $service)
+                                <tr>
+                                    <td>
+                                        <div class="d-flex px-2">
+                                            <div class="text-secondary text-xs font-weight-semibold opacity-7">
+                                                {{ $service->name }}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle text-secondary text-xs font-weight-semibold opacity-7">
+                                        {{ $service->created_at }}</td>
+                                    <td class="align-middle">
+                                        <div class="d-flex alignt-items-center justify-content-center">
+
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#editServiceModal"
+                                                class="text-secondary font-weight-bold text-xs mx-2"
+                                                data-bs-toggle="tooltip" data-bs-title="Edit Service"
+                                                data-service-name="{{ $service->name }}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+
+                                            <a href="#" class="text-danger font-weight-bold text-xs mx-2"
+                                                data-bs-toggle="tooltip" data-bs-title="Delete Service"
+                                                onclick="event.preventDefault(); document.getElementById('delete-service-form-{{ $service->id }}').submit();">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </div>
+
+                                        <form id="delete-service-form-{{ $service->id }}"
+                                            action="{{ route('admin.delete.services', [$establishment->id, $service->id]) }}"
+                                            method="POST" style="display: none;">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-lg-6 col-md-12">
-       
+        <div class="col-lg-6 col-md-12">
+
+        </div>
     </div>
-</div>
 </div>
 <!-- Add a new service -->
 <!-- Modal -->
@@ -211,4 +228,23 @@
     </div>
 </div>
 
+@endsection
+
+
+@section('scripts')
+<script src="{{ asset('/assets/js/plugins/swiper-bundle.min.js') }}" crossorigin="anonymous"></script>
+<script>
+    if (document.getElementsByClassName('mySwiper')) {
+        var swiper = new Swiper(".mySwiper", {
+            effect: "fade",
+            grabCursor: true,
+            initialSlide: 0,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+    };
+
+</script>
 @endsection
