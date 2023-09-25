@@ -9,7 +9,7 @@
           <div class="row">
               <div class="col-auto">
                   <div class="avatar avatar-2xl rounded-circle position-relative mt-n7 border border-gray-100 border-4"> 
-                      <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="Profile Image"  class="w-100">
+                      <img src="{{ Auth::user()->profile_image ? asset('storage/' . Auth::user()->profile_image) : asset('imgs/default.png') }}" alt="Profile Image"  class="w-100">
 
                   </div>
               </div>

@@ -96,7 +96,7 @@
                   <a class="dropdown-item border-radius-md" href="javascript:;">
                     <div class="d-flex py-1">
                       <div class="my-auto">
-                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 " alt="user image">
+                        <img src="{{ asset('imgs/default.png') }}" class="avatar avatar-sm  me-3 " alt="user image">
                       </div>
                       <div class="d-flex flex-column justify-content-center">
                         <h6 class="text-sm font-weight-normal mb-1">
@@ -164,7 +164,7 @@
               <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
             <li class="nav-item dropdown pe-2 d-flex align-items-center">
               <div class="avatar avatar-sm position-relative">
-                <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="profile_image" class="w-100 border-radius-md">
+                <img src="{{ Auth::user()->profile_image ? asset('storage/' . Auth::user()->profile_image) : asset('imgs/default.png') }}" alt="profile_image" class="w-100 border-radius-md">
               </div>
             </li>
             </a>
@@ -210,7 +210,7 @@
         <div class="row">
           <div class="col-auto">
             <div class="avatar avatar-2xl rounded-circle position-relative mt-n7 border border-gray-100 border-4">
-              <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="profile_image" class="w-100">
+              <img src="{{ Auth::user()->profile_image ? asset('storage/' . Auth::user()->profile_image) : asset('imgs/default.png') }}" alt="profile_image" class="w-100">
             </div>
           </div>
           <div class="col-auto my-auto">
@@ -408,7 +408,7 @@
                 </li>
                 <li class="list-group-item border-0 d-flex align-items-center px-0 mb-1">
                   <div class="avatar avatar-sm rounded-circle me-2">
-                    <img src="../assets/img/team-2.jpg" alt="kal" class="w-100">
+                    <img src="{{ asset('imgs/default.png') }}" alt="kal" class="w-100">
                   </div>
                   <div class="d-flex align-items-start flex-column justify-content-center">
                     <h6 class="mb-0 text-sm font-weight-semibold">Miriam Lore</h6>

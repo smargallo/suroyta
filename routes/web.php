@@ -35,9 +35,13 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     Route::post('/establishment/{establishment}/services', [App\Http\Controllers\EstablishmentController::class, 'storeService'])->name('store.services');
     Route::put('/establishment/{establishment}/services/{service}', [App\Http\Controllers\EstablishmentController::class, 'updateService'])->name('update.services');
+    Route::delete('/establishment/{establishment}/services/{service}', [App\Http\Controllers\EstablishmentController::class, 'deleteService'])->name('delete.services');
+    
+    Route::post('/establishment/{establishment}/rooms', [App\Http\Controllers\EstablishmentController::class, 'storeRoom'])->name('store.rooms');
+    Route::put('/establishment/{establishment}/rooms/{room}', [App\Http\Controllers\EstablishmentController::class, 'updateRoom'])->name('update.rooms');
+    Route::delete('/establishment/{establishment}/rooms/{room}', [App\Http\Controllers\EstablishmentController::class, 'deleteRoom'])->name('delete.rooms');
 
     // Delete service
-    Route::delete('/establishment/{establishment}/services/{service}', [App\Http\Controllers\EstablishmentController::class, 'deleteService'])->name('delete.services');
 
     Route::get('/users', [App\Http\Controllers\AdminController::class, 'users'])->name('users');
     Route::get('/profile', [App\Http\Controllers\AdminController::class, 'profile'])->name('profile');

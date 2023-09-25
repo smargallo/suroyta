@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Establishment;
 use App\Models\Destination;
 use App\Models\Service;
+use App\Models\Room;
 
 class EstablishmentController extends Controller
 {
@@ -69,10 +70,11 @@ class EstablishmentController extends Controller
         $establishment  = Establishment::findOrFail($id);
 
         $services       = $establishment->services;
+        $rooms          = $establishment->rooms;
         $images         = $establishment->images;
 
         // Return a view to display the details of the establishment
-        return view('admin.establishments.show', compact('establishment', 'services', 'images'));
+        return view('admin.establishments.show', compact('establishment', 'services', 'images', 'rooms'));
     }
 
 
@@ -116,6 +118,27 @@ class EstablishmentController extends Controller
         return redirect()->route('admin.establishments.index');
     }
 
+    public function storeRoom(Request $request, Establishment $establishment)
+    { 
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'capacity' => 'nullable|numeric',
+            'price' => 'nullable|numeric',
+        ]);
+
+        $room = new Room([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'capacity' => $request->input('capacity'),
+            'price' => $request->input('price'),
+        ]);
+
+        $establishment->rooms()->save($room);
+
+        return redirect()->route('admin.establishments.show', $establishment)->with('success', 'Room created successfully.');
+    }
 
     public function storeService(Request $request, Establishment $establishment)
     {
@@ -148,6 +171,12 @@ class EstablishmentController extends Controller
     public function deleteService(Establishment $establishment, Service $service)
     {
         $service->delete();
+
+        return redirect()->route('admin.establishments.show', $establishment);
+    }
+    public function deleteRoom(Establishment $establishment, Room $room)
+    {
+        $room->delete();
 
         return redirect()->route('admin.establishments.show', $establishment);
     }

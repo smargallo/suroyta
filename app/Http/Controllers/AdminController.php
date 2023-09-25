@@ -44,10 +44,10 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'phone' => 'required|string|max:255|unique:users,phone,' . $user->id,
-            'job' => 'required|string|max:255', // Add validation rules for job
-            'location' => 'required|string|max:255', // Add validation rules for location
-            'description' => 'required|string', // Add validation rules for description
+            'phone' => 'string|max:255|unique:users,phone,' . $user->id,
+            'job' => 'string|max:255', // Add validation rules for job
+            'location' => 'string|max:255', // Add validation rules for location
+            'description' => 'string', // Add validation rules for description
             // Add validation rules for other fields
         ]);
 

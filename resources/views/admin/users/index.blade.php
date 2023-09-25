@@ -74,7 +74,7 @@
                                                     <img src="{{ asset('storage/' . $user->profile_image) }}" alt="Profile Image" class="avatar avatar-sm rounded-circle me-2" id="profile">
 
                                                     @else
-                                                    <img src="../assets/img/team-2.jpg"
+                                                    <img src="{{ asset('imgs/default.png') }}"
                                                         class="avatar avatar-sm rounded-circle me-2" alt="user1">
                                                 @endif
 

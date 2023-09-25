@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('location');
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable(); 
+
             $table->unsignedBigInteger('destination_id');
             $table->boolean('status')->default(true);
             // Add more fields as needed

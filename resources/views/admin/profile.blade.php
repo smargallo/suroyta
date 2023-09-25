@@ -16,7 +16,7 @@
                         </div>
                         <div class="text-end col-lg-4 col-12">
                             <div class="border border-4 border-gray-100 avatar avatar-2xl rounded-circle position-relative mt-n7">
-                                <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="Profile Image" class="w-100 h-100" id="profile">
+                                <img src="{{ Auth::user()->profile_image ? asset('storage/' . Auth::user()->profile_image) : asset('imgs/default.png') }}" alt="Profile Image" class="w-100 h-100" id="profile">
                             </div> 
                         </div>
                     </div>

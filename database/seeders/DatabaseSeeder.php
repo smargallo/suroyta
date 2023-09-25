@@ -26,16 +26,18 @@ class DatabaseSeeder extends Seeder
         if (!$userRole->exists) {
             $userRole->save();
         }
+        $faker = \Faker\Factory::create();
 
         // Create an admin user
         User::create([
             'name' => 'Shean',
             'email' => 'sheanlouisemargallo@gmail.com',
+            'phone' => $faker->unique()->phoneNumber,
+            'location' => $faker->unique()->address,
             'password' => Hash::make('password'), // Hash the password
         ])->roles()->syncWithoutDetaching($adminRole->id);
 
         // Use Faker to generate user data
-        $faker = \Faker\Factory::create();
 
         // Create up to 50 users
         for ($i = 0; $i < 50; $i++) {
