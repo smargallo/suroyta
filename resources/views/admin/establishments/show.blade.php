@@ -106,7 +106,7 @@
                         <table class="table align-items-center justify-content-center mb-0">
                             <thead class="bg-gray-100">
                                 <tr>
-                                    <th class="text-secondary text-xs font-weight-semibold opacity-7">Room Namme</th>
+                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Room Name</th>
                                     <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Capacity</th>
                                     <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Price</th>
                                     <th class="text-center text-secondary text-xs font-weight-semibold opacity-7"></th>
@@ -116,7 +116,7 @@
                                 @foreach ($rooms as $room)
                                 <tr>
                                     <td>
-                                        <div class="d-flex px-2">
+                                        <div class="d-flex ">
                                             <div class="text-secondary text-xs font-weight-semibold opacity-7">
                                                 {{ $room->name }}
                                             </div>
@@ -129,9 +129,14 @@
                                     <td class="align-middle">
                                         <div class="d-flex alignt-items-center justify-content-center">
 
-                                            <a href="#" data-bs-toggle="modal" data-bs-target="#editroomModal"
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#editRoomModal"
                                                 class="text-secondary font-weight-bold text-xs mx-2"
                                                 data-bs-toggle="tooltip" data-bs-title="Edit Room"
+                                                data-bs-action="{{ route('admin.update.rooms', [$establishment->id, $room->id]) }}"
+                                                data-bs-name="{{ $room->name }}"
+                                                data-bs-description="{{ $room->description }}"
+                                                data-bs-price="{{ $room->price }}"
+                                                data-bs-capacity="{{ $room->capacity }}"
                                                 data-room-name="{{ $room->name }}">
                                                 <i class="fa fa-edit"></i>
                                             </a>
@@ -163,16 +168,16 @@
                 <div class="card-header border-bottom pb-0">
                     <div class="d-sm-flex align-items-center mb-3">
                         <div>
-                            <h6 class="font-weight-semibold text-lg mb-0">Services</h6>
-                            <p class="text-sm mb-sm-0 mb-2">These are the list of all services.</p>
+                            <h6 class="font-weight-semibold text-lg mb-0">Rides</h6>
+                            <p class="text-sm mb-sm-0 mb-2">These are the list of all rides.</p>
                         </div>
                         <div class="ms-auto d-flex"> 
                             <button type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-center mb-0"
-                                data-bs-toggle="modal" data-bs-target="#createServiceModal">
+                                data-bs-toggle="modal" data-bs-target="#createRideModal">
                                 <span class="btn-inner--icon mx-2 d-flex align-items-center">
                                     <i class="fa fa-plus"></i>
                                 </span>
-                                <span class="btn-inner--text">New Service</span>
+                                <span class="btn-inner--text">New Ride</span>
                             </button>
                         </div>
                     </div>
@@ -183,42 +188,47 @@
                         <table class="table align-items-center justify-content-center mb-0">
                             <thead class="bg-gray-100">
                                 <tr>
-                                    <th class="text-secondary text-xs font-weight-semibold opacity-7">Service Namme</th>
-                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Date</th>
-                                    <th class="text-center text-secondary text-xs font-weight-semibold opacity-7"></th>
+                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Ride Name</th>
+                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Price</th> 
+                                    <th class="text-center text-secondary text-xs font-weight-semibold opacity-7 ps-2"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($services as $service)
+                                @foreach ($rides as $ride)
                                 <tr>
-                                    <td>
-                                        <div class="d-flex px-2">
-                                            <div class="text-secondary text-xs font-weight-semibold opacity-7">
-                                                {{ $service->name }}
-                                            </div>
-                                        </div>
+                                    <td> 
+                                        <div class="text-secondary text-xs font-weight-semibold">
+                                            {{ $ride->name }}
+                                        </div> 
                                     </td>
-                                    <td class="align-middle text-secondary text-xs font-weight-semibold opacity-7">
-                                        {{ $service->created_at }}</td>
+                                    <td> 
+                                        <div class="text-secondary text-xs font-weight-semibold">
+                                            {{ $ride->price }}
+                                        </div> 
+                                    </td> 
                                     <td class="align-middle">
                                         <div class="d-flex alignt-items-center justify-content-center">
 
-                                            <a href="#" data-bs-toggle="modal" data-bs-target="#editServiceModal"
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#editrideModal"
                                                 class="text-secondary font-weight-bold text-xs mx-2"
-                                                data-bs-toggle="tooltip" data-bs-title="Edit Service"
-                                                data-service-name="{{ $service->name }}">
+                                                data-bs-toggle="tooltip" data-bs-title="Edit Ride"
+                                                data-bs-action="{{ route('admin.update.rides', [$establishment->id, $ride->id]) }}"
+                                                data-bs-name="{{ $ride->name }}"
+                                                data-bs-description="{{ $ride->description }}"
+                                                data-bs-price="{{ $ride->price }}"
+                                                data-ride-name="{{ $ride->name }}">
                                                 <i class="fa fa-edit"></i>
                                             </a>
 
                                             <a href="#" class="text-danger font-weight-bold text-xs mx-2"
-                                                data-bs-toggle="tooltip" data-bs-title="Delete Service"
-                                                onclick="event.preventDefault(); document.getElementById('delete-service-form-{{ $service->id }}').submit();">
+                                                data-bs-toggle="tooltip" data-bs-title="Delete Ride"
+                                                onclick="event.preventDefault(); document.getElementById('delete-ride-form-{{ $ride->id }}').submit();">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
 
-                                        <form id="delete-service-form-{{ $service->id }}"
-                                            action="{{ route('admin.delete.services', [$establishment->id, $service->id]) }}"
+                                        <form id="delete-ride-form-{{ $ride->id }}"
+                                            action="{{ route('admin.delete.rides', [$establishment->id, $ride->id]) }}"
                                             method="POST" style="display: none;">
                                             @csrf
                                             @method('DELETE')
@@ -232,28 +242,118 @@
                 </div>
             </div>
         </div>
+        
  
+    </div>
+
+    <div class="row my-4">
+        <div class="col-lg-6 col-md-12">
+            <div class="card shadow-xs border">
+                <div class="card-header border-bottom pb-0">
+                    <div class="d-sm-flex align-items-center mb-3">
+                        <div>
+                            <h6 class="font-weight-semibold text-lg mb-0">Cottages</h6>
+                            <p class="text-sm mb-sm-0 mb-2">These are the list of all cottages.</p>
+                        </div>
+                        <div class="ms-auto d-flex"> 
+                            <button type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-center mb-0"
+                                data-bs-toggle="modal" data-bs-target="#createCottageModal">
+                                <span class="btn-inner--icon mx-2 d-flex align-items-center">
+                                    <i class="fa fa-plus"></i>
+                                </span>
+                                <span class="btn-inner--text">New Cottage</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body px-0 py-0">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center justify-content-center mb-0">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Cottage Name</th>
+                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Price</th> 
+                                    <th class="text-center text-secondary text-xs font-weight-semibold opacity-7 ps-2"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($cottages as $cottage)
+                                <tr>
+                                    <td> 
+                                        <div class="text-secondary text-xs font-weight-semibold">
+                                            {{ $cottage->name }}
+                                        </div> 
+                                    </td>
+                                    <td> 
+                                        <div class="text-secondary text-xs font-weight-semibold">
+                                            {{ $cottage->price }}
+                                        </div> 
+                                    </td> 
+                                    <td class="align-middle">
+                                        <div class="d-flex alignt-items-center justify-content-center">
+
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#editcottageModal"
+                                                class="text-secondary font-weight-bold text-xs mx-2"
+                                                data-bs-toggle="tooltip" data-bs-title="Edit cottage"
+                                                data-cottage-name="{{ $cottage->name }}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+
+                                            <a href="#" class="text-danger font-weight-bold text-xs mx-2"
+                                                data-bs-toggle="tooltip" data-bs-title="Delete cottage"
+                                                onclick="event.preventDefault(); document.getElementById('delete-cottage-form-{{ $cottage->id }}').submit();">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </div>
+
+                                        <form id="delete-cottage-form-{{ $cottage->id }}"
+                                            action="{{ route('admin.delete.cottages', [$establishment->id, $cottage->id]) }}"
+                                            method="POST" style="display: none;">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <!-- Modals -->
-<!-- Add a new service -->
-<div class="modal fade" id="createServiceModal" tabindex="-1" role="dialog" aria-labelledby="createServiceModal"
+<!-- Add a new Rides -->
+<div class="modal fade" id="createRideModal" tabindex="-1" role="dialog" aria-labelledby="createRideModal"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createServiceModal">Edit Profile</h5>
+                <h5 class="modal-title" id="createRideModal">Add Ride</h5>
                 <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
 
-                <form method="POST" action="{{ route('admin.store.services', $establishment) }}" id="createService">
+                <form method="POST" action="{{ route('admin.store.rides', $establishment) }}" id="createService">
                     @csrf
                     <div class="form-group">
-                        <label for="name">Service Name.</label>
+                        <label for="name">Name</label>
                         <input class="form-control" name="name" id="name" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea name="description" class="form-control" id="description" cols="30" rows="10"></textarea>
+                    </div>
+                    <div class="d-flex ms-auto justify-content-between gap-1">
+                        <div class="col-auto form-group">
+                            <label for="price">Price</label>
+                            <input type="number" class="form-control" name="price" id="price" required />
+                        </div>
                     </div>
 
 
@@ -267,25 +367,38 @@
         </div>
     </div>
 </div>
-<!-- Edit service -->
-<!-- Modal -->
-<div class="modal fade" id="editServiceModal" tabindex="-1" role="dialog" aria-labelledby="editServiceModal"
+
+{{-- Edit Rides --}}
+<div class="modal fade" id="editrideModal" tabindex="-1" role="dialog" aria-labelledby="editrideModal"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editServiceModal">Edit Profile</h5>
+                <h5 class="modal-title" id="editrideModal">Edit Ride</h5>
                 <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
 
-                <form method="POST" action="{{ route('admin.store.services', $establishment) }}" id="editService">
+                <form method="POST" action="" id="editRide">
+
                     @csrf
+                    @method('PUT')
                     <div class="form-group">
-                        <label for="name">Service Name.</label>
+                        <label for="name">Name</label>
                         <input class="form-control" name="name" id="name" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea name="description" class="form-control" id="description" cols="30" rows="10"></textarea>
+                    </div>
+                    <div class="d-flex ms-auto justify-content-between gap-1">
+                        <div class="col-auto form-group">
+                            <label for="price">Price</label>
+                            <input type="number" class="form-control" name="price" id="price" required />
+                        </div>
                     </div>
 
 
@@ -294,7 +407,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-dark"
-                    onclick="document.getElementById('editService').submit();">Save changes</button>
+                    onclick="document.getElementById('editRide').submit();">Save changes</button>
             </div>
         </div>
     </div>
@@ -346,6 +459,98 @@
     </div>
 </div>
 
+<!--Edit room -->
+<div class="modal fade" id="editRoomModal" tabindex="-1" role="dialog" aria-labelledby="editRoomModal"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createRoomModalTitle">Edit Room</h5>
+                <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form method="POST" action="" id="editRoom">
+                    @csrf
+                    @method('PUT')
+                    <div class="form-group">
+                        <label for="name">Room Name</label>
+                        <input type="text" class="form-control" name="name" id="name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea name="description" class="form-control" id="description" cols="30" rows="10"></textarea>
+                    </div>
+                    <div class="d-flex ms-auto justify-content-between gap-1">
+                        <div class="col-auto form-group">
+                            <label for="name">Room Capacity</label>
+                            <input type="number" class="form-control" name="capacity" id="capacity" required />
+                        </div>
+                        <div class="col-auto form-group">
+                            <label for="price">Price</label>
+                            <input type="number" class="form-control" name="price" id="price" required />
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-dark"
+                    onclick="document.getElementById('editRoom').submit();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add a new room -->
+<div class="modal fade" id="createCottageModal" tabindex="-1" role="dialog" aria-labelledby="createCottageModal"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createCottageModalTitle">Add Cottage</h5>
+                <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form method="POST" action="{{ route('admin.store.rooms', $establishment) }}" id="createCottage">
+                    @csrf
+                    <div class="form-group">
+                        <label for="name">Cottage Name</label>
+                        <input type="text" class="form-control" name="name" id="name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea name="description" class="form-control" id="description" cols="30" rows="10"></textarea>
+                    </div>
+                    <div class="d-flex ms-auto justify-content-between gap-1">
+                        
+                        <div class="col-auto form-group">
+                            <label for="price">Price</label>
+                            <input type="number" class="form-control" name="price" id="price" required />
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-dark"
+                    onclick="document.getElementById('createCottage').submit();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 @endsection
 
 
@@ -363,6 +568,37 @@
             },
         });
     };
+     
+
+    // Reusable function to set the form's action attribute
+    function setFormActionInModal(modalId, formId) {
+        var modal = document.querySelector(modalId);
+        var form = document.querySelector(formId);
+
+        modal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget; // Button that triggered the modal
+            var action = button.getAttribute('data-bs-action'); // Get the value of data-bs-action attribute
+
+
+            var name = button.getAttribute('data-bs-name');
+            var description = button.getAttribute('data-bs-description');
+            var price = button.getAttribute('data-bs-price');
+            var capacity = button.getAttribute('data-bs-capacity');
+
+            // Set the form's action attribute based on the data-bs-action value
+            form.setAttribute('action', action);
+
+            form.querySelector('[name="name"]').setAttribute('value', name);
+            var textarea = form.querySelector('[name="description"]');
+            textarea.value = description;
+            form.querySelector('[name="price"]').setAttribute('value', price);
+            form.querySelector('[name="capacity"]').setAttribute('value', capacity);
+        });
+    }
+
+    // Call the function with your modal and form IDs
+    setFormActionInModal('#editrideModal', '#editRide'); 
+    setFormActionInModal('#editRoomModal', '#editRoom'); 
 
 </script>
 @endsection

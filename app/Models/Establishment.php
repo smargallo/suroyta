@@ -30,4 +30,14 @@ class Establishment extends Model
     {
         return $this->hasMany(Room::class);
     }
+
+    public function rides()
+    {
+        return $this->hasMany(Ride::class);
+    }
+
+    public function cottages()
+    {
+        return $this->hasMany(Cottage::class);
+    }
 }

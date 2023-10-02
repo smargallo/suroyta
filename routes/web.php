@@ -41,6 +41,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::put('/establishment/{establishment}/rooms/{room}', [App\Http\Controllers\EstablishmentController::class, 'updateRoom'])->name('update.rooms');
     Route::delete('/establishment/{establishment}/rooms/{room}', [App\Http\Controllers\EstablishmentController::class, 'deleteRoom'])->name('delete.rooms');
 
+    Route::post('/establishment/{establishment}/rides', [App\Http\Controllers\EstablishmentController::class, 'storeRide'])->name('store.rides');
+    Route::put('/establishment/{establishment}/rides/{ride}', [App\Http\Controllers\EstablishmentController::class, 'updateRide'])->name('update.rides');
+    Route::delete('/establishment/{establishment}/rides/{ride}', [App\Http\Controllers\EstablishmentController::class, 'deleteRide'])->name('delete.rides');
+
     // Delete service
 
     Route::get('/users', [App\Http\Controllers\AdminController::class, 'users'])->name('users');
@@ -55,6 +59,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
 Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
+    Route::get('/establishment/{establishment}', [App\Http\Controllers\UserController::class, 'establishment'])->name('establishment');
     Route::get('/profile', [App\Http\Controllers\UserController::class, 'profile'])->name('profile');
     Route::put('/profile/update', [App\Http\Controllers\UserController::class, 'updateProfile'])->name('profile.update');
     Route::put('/password/update', [App\Http\Controllers\UserController::class, 'changePassword'])->name('profile.password');

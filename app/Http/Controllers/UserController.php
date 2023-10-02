@@ -7,14 +7,28 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Rules\CurrentPasswordCheck;
+use Illuminate\Support\Str;
+
+use App\Models\Destination;
+use App\Models\Establishment;
 
 class UserController extends Controller
 {
     public function dashboard()
     {
         // Your dashboard logic here
+        $destinations = Destination::where('status', '1')->get();
+        $establishments = Establishment::where('status', '1')->get();
 
-        return view('users.index');
+        return view('users.index', compact('destinations', 'establishments'));
+    }
+
+    public function establishment(string $id)
+    {
+        // Your dashboard logic here
+        $establishment  = Establishment::findOrFail($id);
+
+        return view('users.establishment', compact('establishment'));
     }
 
     public function profile()

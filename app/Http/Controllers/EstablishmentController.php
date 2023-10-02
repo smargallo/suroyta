@@ -7,6 +7,8 @@ use App\Models\Establishment;
 use App\Models\Destination;
 use App\Models\Service;
 use App\Models\Room;
+use App\Models\Ride;
+use App\Models\Cottage;
 
 class EstablishmentController extends Controller
 {
@@ -40,8 +42,8 @@ class EstablishmentController extends Controller
         // Validate input
         $validatedData =  $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'location' => 'required|string|max:255',
+            'description' => 'string',
+            'location' => 'string|max:255',
             'destination_id' => 'required',
         ]); 
         
@@ -70,11 +72,13 @@ class EstablishmentController extends Controller
         $establishment  = Establishment::findOrFail($id);
 
         $services       = $establishment->services;
+        $rides          = $establishment->rides;
         $rooms          = $establishment->rooms;
         $images         = $establishment->images;
+        $cottages       = $establishment->cottages;
 
         // Return a view to display the details of the establishment
-        return view('admin.establishments.show', compact('establishment', 'services', 'images', 'rooms'));
+        return view('admin.establishments.show', compact('establishment', 'rides', 'images', 'rooms', 'cottages'));
     }
 
 
@@ -82,9 +86,10 @@ class EstablishmentController extends Controller
     {
         // Retrieve the specific establishment based on the provided $id
         $establishment = Establishment::findOrFail($id);
-
+        $destinations = Destination::where('status', 1)->get();
+        $images       = $establishment->images;
         // Return a view with a form for editing the establishment
-        return view('admin.establishments.edit', compact('establishment'));
+        return view('admin.establishments.edit', compact('establishment', 'destinations', 'images'));
     }
 
 
@@ -100,6 +105,16 @@ class EstablishmentController extends Controller
 
         // Update the establishment with the validated data
         $establishment->update($validatedData);
+
+        // Upload and associate multiple images with the establishment
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imagePath = $image->store('images/establishments', 'public');
+                $establishment->images()->create(['image_path' => $imagePath]);
+            }
+        }
+        
+        $establishment->destination()->associate($request->input('destination_id'));
 
         // Redirect to the appropriate page (e.g., show the updated establishment)
         return redirect()->route('admin.establishments.show', $establishment->id);
@@ -140,6 +155,90 @@ class EstablishmentController extends Controller
         return redirect()->route('admin.establishments.show', $establishment)->with('success', 'Room created successfully.');
     }
 
+    public function updateRoom(Request $request, Establishment $establishment, Room $room)
+    {
+         
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'capacity' => 'nullable|numeric',
+            'price' => 'nullable|numeric',
+        ]);
+ 
+        // Update the attributes of the existing Ride model
+        $room->name = $request->input('name');
+        $room->description = $request->input('description');
+        $room->capacity = $request->input('capacity');
+        $room->price = $request->input('price');
+
+        // Save the updated model
+        $room->save();
+
+        return redirect()->route('admin.establishments.show', $establishment);
+    }
+
+    public function storeRide(Request $request, Establishment $establishment)
+    { 
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'nullable|numeric',
+        ]);
+
+        $ride = new Ride([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'price' => $request->input('price'),
+        ]);
+
+        $establishment->rides()->save($ride);
+
+        return redirect()->route('admin.establishments.show', $establishment)->with('success', 'Room created successfully.');
+    }
+
+    public function updateRide(Request $request, Establishment $establishment, Ride $ride)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'nullable|numeric',
+        ]);
+ 
+        // Update the attributes of the existing Ride model
+        $ride->name = $request->input('name');
+        $ride->description = $request->input('description');
+        $ride->price = $request->input('price');
+
+        // Save the updated model
+        $ride->save();
+
+
+        return redirect()->route('admin.establishments.show', $establishment);
+    }
+
+    public function deleteRoom(Establishment $establishment, Room $room)
+    {
+        $room->delete();
+
+        return redirect()->route('admin.establishments.show', $establishment);
+    }
+
+    public function deleteRide(Establishment $establishment, Ride $ride)
+    {
+        $ride->delete();
+
+        return redirect()->route('admin.establishments.show', $establishment);
+    }
+
+    public function deleteCottage(Establishment $establishment, Cottage $cottage)
+    {
+        $cottage->delete();
+
+        return redirect()->route('admin.establishments.show', $establishment);
+    }
+
+    // For Services
     public function storeService(Request $request, Establishment $establishment)
     {
         $request->validate([
@@ -171,12 +270,6 @@ class EstablishmentController extends Controller
     public function deleteService(Establishment $establishment, Service $service)
     {
         $service->delete();
-
-        return redirect()->route('admin.establishments.show', $establishment);
-    }
-    public function deleteRoom(Establishment $establishment, Room $room)
-    {
-        $room->delete();
 
         return redirect()->route('admin.establishments.show', $establishment);
     }
